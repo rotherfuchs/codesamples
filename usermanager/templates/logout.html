@@ -1,0 +1,42 @@
+{% extends "unauth_base.html" %}
+{% load i18n %}
+
+{% block content %}
+logout
+            <form method="POST">{% csrf_token %}
+                <div class="row" id="login">
+                    <div class="col-sm-3">&nbsp;</div>
+                    <div class="col-sm-6" id="login-box">
+                        <div class="jumbotrons">
+                            <h1>{% trans "Hello, Dear!" %}</h1>
+                            <p>{% trans "Please login." %}</p>
+
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                    {{ error|escape }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div>    
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                {{ form.username }}
+                            </div>  
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
+                                {{ form.password }}
+                            </div>
+                            <br/>
+                            <input type="submit" class="btn btn-success btn-lg" role="button" value="{% trans 'Login' %}"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">&nbsp;</div>
+
+                </div>
+            </form>
+{% endblock %}
+

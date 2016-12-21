@@ -1,0 +1,53 @@
+{% extends "unauth_base.haml" %}
+{% load i18n %}
+{% load static from staticfiles %}
+{% load compress %}
+
+{% block head %}
+    {% compress css %}
+    %link{'rel': 'stylesheet', 'type': 'text/x-sass', 'href': '{% static "usermanager/css/styles.sass" %}'}
+    {% endcompress %}
+
+{% endblock %}
+
+{% block content %}
+    #wrap
+        .col-sm-2
+        .col-sm-8.boxed
+            %form{'method': 'POST'}
+                {% csrf_token %}
+
+                #login.row
+                    .col-sm-3
+                    #login-box.col-sm-6
+                        .jumbotrons
+                            %span.customer_logo
+                            %h1
+                                {% trans "Customer Service Portal" %}
+                            %p
+                                {% trans "Willkommen! Bitte Benutzerdaten eingeben." %}
+
+                            {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                .alert.alert-danger{'role': 'alert'}
+                                    %i.glyphicon.glyphicon-remove
+                                    {{ error|escape }}
+                                {% endfor %}
+                            {% endif %}
+
+                        %div
+                            .input-group.input-group-lg
+                                %span.input-group-addon{'style': 'color: #ff6600'}
+                                    %i.fa.fa-user
+                                {{ form.username }}
+
+                            .input-group.input-group-lg
+                                %span.input-group-addon{'style': 'color: #54cc14'}
+                                    %i.fa.fa-barcode
+                                {{ form.password }}
+
+                            %input.btn.btn-default.btn-lg{'type': 'submit', 'role': 'button', 'value': '{% trans "Login" %}'}
+                    .col-sm-3
+        .col-sm-2
+        #push
+{% endblock %}
